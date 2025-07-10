@@ -3,6 +3,8 @@
 
 **Tools:**
 get_categories: gets information regarding the categories and type included in the data set.
+
+
 save_doc: saves python script
 
 
