@@ -1,41 +1,57 @@
-Test of langgraph for writing code to visualize data from a user query.
+**Test of langgraph for writing code to visualize data from a user query.**
 
-Tools:
+
+**Tools:**
 get_categories: gets information regarding the categories and type included in the data set.
+save_doc: saves python script
 
-Agents:
+
+**Agents:**
 agent_node: generates python script for visualization. 
 
-Example interaction:
+
+**Example interaction:**
 ```
+You:  generate code that shows the distribution of incidents by category
 
-You: generate code that shows the distribution of incidents by category
-
-Tool call: [{'name': 'get_categories', 'args': {'data': 'incident_reports'}, 'id': 'call_HIbEBTvfclsMMiW8uLhluHi1', 'type': 'tool_call'}]
+Tool call: [{'name': 'get_categories', 'args': {'data': 'incident_reports'}, 'id': 'call_aogCGS2MJajS7z20SopVvmez', 'type': 'tool_call'}]
 
 
-AI: Based on the data set information, the categories we have are 'time of incident', 'app', and 'severity'. To show the distribution of incidents by category, it makes sense to visualize the distribution of incidents by 'app', since it is a categorical variable. Here is the code to achieve that using Plotly:
+AI: Based on the given data set information, the data contains the following categories:
 
-python
-import pandas as pd
+- `time of incident`: Integer type
+- `app`: String type
+- `severity`: Integer type
+
+Since the `app` category is a string type, we will use it to show the distribution of incidents by category. Here is the Python script using Plotly to visualize this:
+
+```python
 import plotly.express as px
+import pandas as pd
 
-# Sample data assuming you have incident data as a CSV file
+# Sample data frame with incident reports
 data = {
-    'time of incident': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    'app': ['App A', 'App B', 'App A', 'App C', 'App B', 'App A', 'App C', 'App B', 'App A', 'App C'],
-    'severity': [2, 3, 2, 4, 2, 1, 5, 3, 4, 3]
+    "time of incident": [1633072800, 1633076400, 1633080000, 1633083600, 1633087200],
+    "app": ["email", "browser", "email", "email", "browser"],
+    "severity": [2, 3, 1, 4, 5]
 }
 
 df = pd.DataFrame(data)
 
-# Plotting the distribution of incidents by app category
-fig = px.histogram(df, x='app', title='Distribution of Incidents by App Category', labels={'app':'App Category', 'count':'Number of Incidents'}, color='app')
+# Create the plot
+fig = px.histogram(df, x="app", title="Distribution of Incidents by Category")
 
+# Show the plot
 fig.show()
 
+Would you like to save this document?
 
-This code snippet assumes you have incident data which includes 'time of incident', 'app', and 'severity'. Adjust the sample data loading mechanism as per your actual data source.
+You: yes
+
+Tool call: [{'name': 'save_doc', 'args': {'script': 'import plotly.express as px\nimport pandas as pd\n\n# Sample data frame with incident reports\ndata = {\n    "time of incident": [1633072800, 1633076400, 1633080000, 1633083600, 1633087200],\n    "app": ["email", "browser", "email", "email", "browser"],\n    "severity": [2, 3, 1, 4, 5]\n}\n\ndf = pd.DataFrame(data)\n\n# Create the plot\nfig = px.histogram(df, x="app", title="Distribution of Incidents by Category")\n\n# Show the plot\nfig.show()\n'}, 'id': 'call_GLRixdWbbqWAqpGpW80KuS45', 'type': 'tool_call'}]
+
+
+AI: The script has been saved successfully. If you need any further assistance, feel free to ask!
 
 You: 
 ```
