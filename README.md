@@ -1,5 +1,11 @@
 Test of langgraph for writing code to visualize data from a user query.
 
+Tools:
+get_categories: gets information regarding the categories and type included in the data set.
+
+Agents:
+agent_node: generates python script for visualization. 
+
 Example interaction:
 ```
 
