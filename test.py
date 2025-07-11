@@ -26,7 +26,7 @@ def get_categories(data) -> dict:
     """
     #todo, implement function.
 
-    #mock function
+    #for mock data set containing columns with time of incident, app name, and severity
     dict = {"time of incident": int, "app": str, "severity": int}
     return dict
 

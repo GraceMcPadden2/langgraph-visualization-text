@@ -1,17 +1,21 @@
 import plotly.express as px
 import pandas as pd
 
-# Sample data frame with incident reports
+# Sample data
 data = {
-    "time of incident": [1633072800, 1633076400, 1633080000, 1633083600, 1633087200],
-    "app": ["email", "browser", "email", "email", "browser"],
-    "severity": [2, 3, 1, 4, 5]
+    "time of incident": [20200101, 20200102, 20200103, 20200104, 20200105],
+    "app": ["App1", "App2", "App1", "App3", "App2"],
+    "severity": [1, 3, 2, 4, 1]
 }
 
+# Creating a DataFrame
 df = pd.DataFrame(data)
 
-# Create the plot
-fig = px.histogram(df, x="app", title="Distribution of Incidents by Category")
+# Converting 'time of incident' to a datetime object
+df['time of incident'] = pd.to_datetime(df['time of incident'], format='%Y%m%d')
 
-# Show the plot
+# Plotting
+fig = px.line(df, x='time of incident', y='severity', title='Incident Reports Over Time',
+              labels={'time of incident': 'Time of Incident', 'severity': 'Severity'})
+
 fig.show()
