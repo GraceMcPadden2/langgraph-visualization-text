@@ -6,7 +6,7 @@ from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, END
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode
-import os,sys
+import os,sys, subprocess
 
 load_dotenv()
 # ---------- 1. Graph state ---------------------------------------------------
@@ -43,7 +43,16 @@ def save_doc(script):
     with open("script.py", "w") as file:
         file.write(script)
 
-tools = [get_categories, save_doc]
+@tool
+def run_viz():
+    """executes script
+
+    Returns:
+        none
+    """
+    subprocess.run(["python3", "./script.py"], check=True)
+
+tools = [get_categories, save_doc, run_viz]
 
 # ---------- 3. LLM bound to tools -------------------------------------------
 llm = ChatOpenAI(model="gpt-4o").bind_tools(tools)
@@ -57,11 +66,13 @@ of incident reports using plotly.
 
 - If a user asks for a specific data visualization, first call tool get_categories
 to get information regarding the data set.
+-If a user asks for ideas, call tool get_categories.
+-If a user asks for ideas, Immidiately after calling get_categories, generate 2-3 possible data vizualizations.
 - after getting information regarding the data set, generate a python script that 
 uses Plotly to visualize data according to the user query and data set information.
 - after sending document to the user, ask if they would like to save the document. If they say yes,
-call save_doc with script parameter of 
-code generated to save the file.
+call save_doc with script parameter of code generated to save the file.
+- immidiately after calling save_doc, call run_viz to display data
 """)
 
     # prepend system instruction each turn
